@@ -1,0 +1,17 @@
+# docker-compose.yml
+version: '3'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    environment:
+      - FLASK_ENV=production
+    restart: unless-stopped
+    
+  redis:
+    image: redis:alpine
+    restart: unless-stopped
