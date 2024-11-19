@@ -1,0 +1,22 @@
+
+version: '3.8'
+
+services:
+  pyjail_ctf:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: pyjail_ctf
+    ports:
+      - "1337:1337"  # Map port 1337 of the host to the container
+    restart: unless-stopped
+    read_only: true  # Set container filesystem to read-only
+    security_opt:
+      - no-new-privileges:true  # Prevent privilege escalation
+    cap_drop:
+      - ALL  # Drop all capabilities
+    mem_limit: 128m  # Limit memory to 128MB
+    cpus: 0.5  # Limit to 50% of a single CPU core
+    environment:
+      - PYTHONUNBUFFERED=1  # Ensure real-time output in logs
+    user: 1000:1000  # Use non-root user by default
